@@ -154,7 +154,7 @@ export default function CheckinsPage() {
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center">
                     
-                    <div className="flex-1 space-y-3 min-w-0">
+                    <div className="flex-1 space-y-3 min-w-0 w-full">
                       {role === "MANAGER" && goal.owner && (
                         <div className="flex items-center gap-2 mb-2">
                           <Avatar className="h-6 w-6">
@@ -164,7 +164,7 @@ export default function CheckinsPage() {
                         </div>
                       )}
                       
-                      <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start justify-between gap-4 w-full">
                         <div className="min-w-0 flex-1">
                           <h4 className="font-semibold text-lg leading-tight truncate">{goal.title}</h4>
                           <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-zinc-500">
