@@ -28,11 +28,15 @@ export const authOptions: AuthOptions = {
           if (credentials.email.startsWith("manager")) role = "MANAGER";
           if (credentials.email.startsWith("admin")) role = "ADMIN";
           
+          // Fetch a default department to avoid null department issues for Shared KPIs
+          const defaultDept = await prisma.department.findFirst();
+          
           user = await prisma.user.create({
             data: {
               email: credentials.email,
               name: credentials.email.split("@")[0].toUpperCase(),
               role: role,
+              departmentId: defaultDept?.id
             },
             include: { department: true }
           });
