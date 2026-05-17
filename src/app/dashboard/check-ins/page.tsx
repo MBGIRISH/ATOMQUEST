@@ -164,16 +164,16 @@ export default function CheckinsPage() {
                         </div>
                       )}
                       
-                      <div className="flex items-start justify-between">
-                        <div>
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0 flex-1">
                           <h4 className="font-semibold text-lg leading-tight truncate">{goal.title}</h4>
-                          <div className="flex gap-4 mt-1 text-sm text-zinc-500">
+                          <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-zinc-500">
                             <span>Target: {goal.target}</span>
                             <span>Current: <span className="font-medium text-zinc-900 dark:text-white">{currentCheckin?.achievement || 0}</span></span>
                           </div>
                         </div>
                         {hasCheckin && (
-                          <div className={`px-2 py-1 rounded text-xs font-medium ${
+                          <div className={`shrink-0 px-2 py-1 rounded text-[10px] sm:text-xs font-medium ${
                             currentCheckin.status === 'ON_TRACK' ? 'bg-emerald-100 text-emerald-700' :
                             currentCheckin.status === 'AT_RISK' ? 'bg-amber-100 text-amber-700' :
                             currentCheckin.status === 'DELAYED' ? 'bg-red-100 text-red-700' :
