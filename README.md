@@ -7,6 +7,43 @@ AtomQuest is a high-performance, enterprise-grade Goal Setting and Tracking Port
 
 ---
 
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    subgraph Users ["User Personas (Role-Based Access)"]
+        E[Employee]
+        M[Manager]
+        A[Admin / HR]
+    end
+
+    E -->|Submit Goals & Check-ins| F1
+    M -->|Approve/Reject & Push KPIs| F1
+    A -->|View Analytics & Audit Logs| F1
+
+    subgraph Frontend ["Frontend (Vercel Edge)"]
+        F1[Next.js 15 App Router]
+        F1 --> F2[Zustand & TanStack Query]
+        F1 --> F3[Shadcn UI + Tailwind CSS]
+    end
+
+    F2 <-->|JSON Payloads| B1
+
+    subgraph Backend ["Backend API (Vercel Serverless)"]
+        B1[Next.js API Routes]
+        B1 --> B2[NextAuth.js SSO]
+        B1 --> B3[Zod Schema Validation]
+        B3 --> B4[Prisma ORM]
+    end
+
+    subgraph Cloud ["Cloud Infrastructure"]
+        C1[Vercel Cron Jobs] -->|Daily Trigger| B1
+        B4 <--> C2[(Supabase PostgreSQL)]
+    end
+```
+
+---
+
 ## 🌟 Key Features
 
 ### 🔐 1. Role-Based Access Control (RBAC)
@@ -27,7 +64,7 @@ Managers can push Master Department KPIs down to their team. Employees inherit t
 ### ⏳ 4. Automated Workflows & Escalation
 - **Strict Validation:** Real-time checking to ensure goal weightages exactly equal 100% and maximum limits are enforced.
 - **Goal Locking:** Approved goals are mathematically frozen to preserve audit integrity.
-- **Cron Engine:** An automated nightly escalation engine queries the Prisma database for missed deadlines and dispatches notifications.
+- **SLA Escalation Engine:** A Vercel Cron Job sweeps the PostgreSQL database daily. Goals that miss deadlines or check-ins are automatically flagged, generating an Escalation Ticket visible in a dedicated Admin Dashboard for HR resolution.
 
 ### 📊 5. Real-Time Analytics & Exports
 - **Live CSV Export:** Download entire department performance reports in one click.
