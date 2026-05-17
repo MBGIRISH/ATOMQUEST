@@ -1,0 +1,178 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Enums replaced with strings for SQLite support
+
+model Department {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       User[]
+  kpis        Goal[]   @relation("DepartmentKPI")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          String    @default("EMPLOYEE")
+  departmentId  String?
+  managerId     String?
+  
+  department    Department? @relation(fields: [departmentId], references: [id])
+  manager       User?       @relation("UserToManager", fields: [managerId], references: [id])
+  subordinates  User[]      @relation("UserToManager")
+  
+  goals         Goal[]      @relation("UserGoals")
+  approvals     Approval[]
+  comments      Comment[]
+  auditLogs     AuditLog[]
+  notifications Notification[]
+  escalations   Escalation[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Goal {
+  id             String     @id @default(cuid())
+  title          String
+  description    String?
+  thrustArea     String
+  uomType        String    @default("PERCENTAGE")
+  target         Float
+  weightage      Float
+  deadline       DateTime
+  status         String    @default("DRAFT")
+  priority       String    @default("MEDIUM")
+  
+  ownerId        String
+  owner          User       @relation("UserGoals", fields: [ownerId], references: [id])
+  
+  departmentId   String?
+  department     Department? @relation("DepartmentKPI", fields: [departmentId], references: [id])
+  
+  isShared       Boolean    @default(false)
+  parentGoalId   String?
+  parentGoal     Goal?      @relation("SharedGoals", fields: [parentGoalId], references: [id])
+  childGoals     Goal[]     @relation("SharedGoals")
+  
+  checkins       QuarterlyCheckin[]
+  approvals      Approval[]
+  comments       Comment[]
+  attachments    Attachment[]
+  auditLogs      AuditLog[]
+  escalations    Escalation[]
+  
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Approval {
+  id           String     @id @default(cuid())
+  goalId       String
+  goal         Goal       @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  approverId   String
+  approver     User       @relation(fields: [approverId], references: [id])
+  status       String
+  comment      String?
+  createdAt    DateTime   @default(now())
+}
+
+model QuarterlyCheckin {
+  id           String        @id @default(cuid())
+  goalId       String
+  goal         Goal          @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  quarter      Int           // 1, 2, 3, 4
+  year         Int
+  achievement  Float         @default(0)
+  status       String        @default("NOT_STARTED")
+  managerNotes String?
+  employeeNotes String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  @@unique([goalId, quarter, year])
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  action       String
+  entityType   String   // "GOAL", "USER", etc.
+  entityId     String
+  previousData String?
+  newData      String?
+  ipAddress    String?
+  userAgent    String?
+  goalId       String?
+  goal         Goal?    @relation(fields: [goalId], references: [id])
+  createdAt    DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+}
+
+model Escalation {
+  id          String   @id @default(cuid())
+  goalId      String
+  goal        Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  reason      String
+  level       Int      @default(1) // 1: Manager, 2: HR
+  resolved    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  goalId    String
+  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attachment {
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  fileType  String
+  size      Int
+  goalId    String
+  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Report {
+  id          String   @id @default(cuid())
+  name        String
+  type        String   // "ACHIEVEMENT", "COMPLETION", etc.
+  url         String
+  generatedBy String
+  createdAt   DateTime @default(now())
+}
