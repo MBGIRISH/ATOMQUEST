@@ -1,13 +1,63 @@
+<div align="center">
+
+<img src="./public/atomquest-banner.jpg" alt="AtomQuest Hackathon 1.0 Banner" width="800" style="border-radius: 12px; margin-bottom: 20px;" />
+
 # 🚀 AtomQuest 1.0
-**Next-Generation Performance Management & Goal Tracking Platform**
 
-AtomQuest is a high-performance, enterprise-grade Goal Setting and Tracking Portal built for the modern workforce. Designed with mathematical rigor, seamless role-based workflows, and a stunning UI, it replaces archaic performance reviews with real-time, automated, and shared quarterly check-ins.
+**The Ultimate Next-Generation Enterprise Performance Management & Goal Tracking Platform**
 
-![AtomQuest Cover Image](https://via.placeholder.com/1200x600/09090b/ffffff?text=AtomQuest+Performance+Management+Platform)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+
+[**Live Demo**](https://atomquest-one.vercel.app) • [**Report Bug**](https://github.com/MBGIRISH/ATOMQUEST/issues) • [**Request Feature**](https://github.com/MBGIRISH/ATOMQUEST/issues)
+
+</div>
+
+---
+
+## 🌟 Overview
+
+**AtomQuest** is a high-performance, enterprise-grade Goal Setting and Tracking Portal built for the modern workforce. Designed with mathematical rigor, seamless role-based workflows, and a stunning UI, it replaces archaic performance reviews with real-time, automated, and shared quarterly check-ins.
+
+This platform was engineered from the ground up for the **Atomberg AtomQuest Hackathon 1.0**.
+
+---
+
+## ⚡ Core Features
+
+### 🔐 1. Strict Role-Based Access Control (RBAC)
+Secure, middleware-protected workflows tailored to three core personas:
+- **👤 Employees:** Draft, submit, and manage goals. Log quarterly fractional check-ins.
+- **💼 Managers:** Approve, reject, or request rework on team goals. Cascade **Shared KPIs** down the hierarchy.
+- **👑 Admins / HR:** Oversee organization analytics, monitor SLA escalations, and unlock frozen goals.
+
+### 🎯 2. Intelligent Progress Engine
+A sophisticated mathematical goal-tracking engine with multiple Units of Measurement (UoM):
+- **Numeric & Percentage:** Standard fractional achievement tracking.
+- **Timeline:** Date-driven goal progression.
+- **Zero-Based:** Binary edge-case handling (e.g., Target=0, dividing-by-zero protection).
+
+### 🤝 3. Cascading Shared KPIs
+Managers can push Master Department KPIs down to their team. Employees inherit these shared goals and can only modify their personal weightage, ensuring **total organizational alignment** while preserving data consistency.
+
+### ⏳ 4. Automated Workflows & SLA Escalation 🏆 *(Bonus Module)*
+- **Strict Validation:** Real-time checking to ensure goal weightages exactly equal 100%.
+- **Goal Locking:** Approved goals are mathematically frozen to preserve audit integrity.
+- **SLA Escalation Engine:** A **Vercel Cron Job** sweeps the PostgreSQL database daily. Goals that miss deadlines or check-ins are automatically flagged, generating an Escalation Ticket visible in a dedicated Admin Dashboard for HR resolution.
+
+### 📊 5. Real-Time Analytics & Exports 🏆 *(Bonus Module)*
+- **Interactive Dashboards:** Gorgeous, glassmorphic data visualization for QoQ trends, goal distribution, and achievement matrixes powered by **Recharts**.
+- **Live CSV Export:** Download entire department performance reports in one click via live PostgreSQL aggregation.
 
 ---
 
 ## 🏗️ System Architecture
+
+AtomQuest leverages a fully serverless Edge computing architecture to deliver sub-50ms latency globally.
 
 ```mermaid
 graph TD
@@ -44,52 +94,40 @@ graph TD
 
 ---
 
-## 🌟 Key Features
+## 💻 Tech Stack
 
-### 🔐 1. Role-Based Access Control (RBAC)
-Strict, middleware-protected workflows tailored to three core personas:
-- **Employees:** Create goals, log quarterly check-ins, and track personal achievement.
-- **Managers:** Approve/Reject goals, request rework, push shared department KPIs, and provide feedback.
-- **Admins:** Oversee organization analytics, monitor escalations, and unlock frozen goals.
-
-### 🎯 2. Intelligent Progress Engine
-A sophisticated goal-tracking engine with multiple Units of Measurement (UoM):
-- **Numeric & Percentage:** Standard fractional achievement tracking.
-- **Timeline:** Date-driven goal progression.
-- **Zero-Based:** Binary edge-case handling (e.g., Target=0, dividing-by-zero protection).
-
-### 🤝 3. Cascading Shared KPIs
-Managers can push Master Department KPIs down to their team. Employees inherit these shared goals and can only modify their personal weightage, ensuring total organizational alignment while preserving data consistency across the database.
-
-### ⏳ 4. Automated Workflows & Escalation
-- **Strict Validation:** Real-time checking to ensure goal weightages exactly equal 100% and maximum limits are enforced.
-- **Goal Locking:** Approved goals are mathematically frozen to preserve audit integrity.
-- **SLA Escalation Engine:** A Vercel Cron Job sweeps the PostgreSQL database daily. Goals that miss deadlines or check-ins are automatically flagged, generating an Escalation Ticket visible in a dedicated Admin Dashboard for HR resolution.
-
-### 📊 5. Real-Time Analytics & Exports
-- **Live CSV Export:** Download entire department performance reports in one click.
-- **Recharts Integration:** Gorgeous, glassmorphic data visualization for QoQ trends, goal distribution, and achievement matrixes.
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router, Turbopack)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Database:** [PostgreSQL](https://postgresql.org/) (Hosted on Supabase)
+- **ORM:** [Prisma](https://www.prisma.io/)
+- **Authentication:** [NextAuth.js](https://next-auth.js.org/) (Enterprise SSO Mocking)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/), Framer Motion
+- **UI Components:** Shadcn UI, Headless UI, Lucide Icons
+- **Data Validation:** Zod
+- **Infrastructure:** Vercel (Edge Functions & Cron Jobs)
 
 ---
 
-## 💻 Tech Stack
+## 🔑 Demo Credentials
 
-- **Framework:** Next.js 15 (App Router, Turbopack)
-- **Language:** TypeScript
-- **Database:** PostgreSQL via Prisma ORM
-- **Authentication:** NextAuth.js (Entra ID Mocking)
-- **Styling:** Tailwind CSS, Framer Motion
-- **UI Components:** Shadcn UI, Base UI, Lucide Icons
-- **Validation:** Zod
+AtomQuest features an auto-provisioning mock authentication system specifically engineered for rapid Hackathon judging. Simply use the following emails (any password works) to instantly switch between roles:
+
+| Persona | Login Email | Key Journey |
+| :--- | :--- | :--- |
+| **Admin / HR** | `admin@demo.com` | View Analytics Dashboard & SLA Escalation Queue |
+| **Manager** | `manager@demo.com` | Approve team goals & push Shared KPIs |
+| **Employee** | `employee@demo.com` | Draft goals & log Quarterly Check-ins |
 
 ---
 
 ## 🚀 Getting Started
 
+Follow these instructions to run the project locally.
+
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/atomquest.git
-cd atomquest
+git clone https://github.com/MBGIRISH/ATOMQUEST.git
+cd ATOMQUEST
 ```
 
 ### 2. Install Dependencies
@@ -100,8 +138,11 @@ npm install
 ### 3. Setup Environment Variables
 Create a `.env` file in the root directory:
 ```env
+# Required: Supabase or local PostgreSQL connection string
 DATABASE_URL="postgresql://user:password@localhost:5432/atomquest"
-NEXTAUTH_SECRET="your-super-secret-string-for-jwt"
+
+# Required: Auth Secrets
+NEXTAUTH_SECRET="your-super-secret-jwt-encryption-key"
 NEXTAUTH_URL="http://localhost:3000"
 ```
 
@@ -110,30 +151,24 @@ NEXTAUTH_URL="http://localhost:3000"
 npx prisma db push
 ```
 
-### 5. Start the Application
+### 5. Start the Development Server
 ```bash
 npm run dev
 ```
 
----
-
-## 🔑 Demo Credentials
-
-AtomQuest features an auto-provisioning mock authentication system for easy hackathon judging. Simply use the following emails (any password works) to instantly switch between roles:
-
-- **Admin Access:** `admin@demo.com`
-- **Manager Access:** `manager@demo.com`
-- **Employee Access:** `employee@demo.com`
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
 ## 🛡️ Security & Integrity
 
-AtomQuest was engineered with enterprise-level constraints:
-- **Zod Schema Validation:** Every API route strictly validates incoming payloads. Negative numeric values, missing fields, or weightage overflows are instantly rejected.
+AtomQuest was engineered with strict enterprise constraints:
+- **Zod Schema Validation:** Every API route rigidly validates incoming payloads. Negative numeric values, missing fields, or weightage overflows are instantly rejected.
 - **Prisma Transactions:** Complex operations (like syncing shared KPIs) utilize database-level transaction guarantees.
 - **Zero-Trust UI:** Forms remount dynamically to prevent React state caching, and the UI never trusts client-side state without backend verification.
 
 ---
 
-*Built for the Future of Work.*
+<div align="center">
+  <p>Built with ❤️ for the AtomQuest Hackathon</p>
+</div>
